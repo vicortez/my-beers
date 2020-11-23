@@ -1,24 +1,24 @@
-import React, { FunctionComponent, useState } from 'react';
-import User from '../../models/User';
-import { AuthContext, AuthControlContext, AuthState } from './AuthContext';
-
-
+import React, { FunctionComponent, useState } from 'react'
+import User from '../../models/User'
+import { AuthContext, AuthControlContext, AuthState } from './AuthContext'
 
 interface Props {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
-export const AuthProvider: FunctionComponent<Props> = (props) => {
+const initialAuth: AuthState = {
+  accessToken: '',
+  user: null,
+}
 
-    const [authState, setAuthState] = useState<AuthState>({ accessToken: '', user: null })
+export const AuthProvider: FunctionComponent<Props> = ({ children }: Props) => {
+  const [authState, setAuthState] = useState<AuthState>(initialAuth)
 
-    const setToken = (accessToken: string, user: User) => setAuthState({ ...authState, accessToken, user })
+  const setState = (accessToken: string, user: User): void => setAuthState({ ...authState, accessToken, user })
 
-    return (
-        <AuthContext.Provider value={authState}>
-            <AuthControlContext.Provider value={setToken}>
-                {props.children}
-            </AuthControlContext.Provider>
-        </AuthContext.Provider>
-    )
+  return (
+    <AuthContext.Provider value={authState}>
+      <AuthControlContext.Provider value={{ setAuthState: setState }}>{children}</AuthControlContext.Provider>
+    </AuthContext.Provider>
+  )
 }
