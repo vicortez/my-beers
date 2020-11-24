@@ -1,0 +1,41 @@
+{
+  "name": "api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "concurrently -k -p \"[{name}]\" -n \"tsc,nodemon\" -c \"cyan,green\" \"npm run watch-ts\" \"npm run start-nodemon\"",
+    "watch-ts": "tsc -w",
+    "start-nodemon": "nodemon dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "fbgraph": "^1.4.4",
+    "mongoose": "^5.10.15",
+    "nodemailer": "^6.4.16",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "passport-local": "^1.0.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.9",
+    "@types/express-session": "^1.17.3",
+    "@types/mongoose": "^5.10.1",
+    "@types/nodemailer": "^6.4.0",
+    "@types/passport": "^1.0.4",
+    "@types/passport-facebook": "^2.1.10",
+    "@types/passport-local": "^1.0.33",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
+  }
+}
