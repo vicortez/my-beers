@@ -1,3 +1,4 @@
+import mongo from 'connect-mongo'
 import express from 'express'
 import session from 'express-session'
 import mongoose from 'mongoose'
@@ -8,8 +9,8 @@ import { apiRouter } from './routes'
 const app = express()
 
 app.set('port', process.env.PORT || 8080)
+const mongoURI = 'mongodb://localhost/my-beers'
 ;(async (): Promise<void> => {
-  const mongoURI = 'mongodb://localhost/my-beers'
   try {
     await mongoose.connect(mongoURI, { useNewUrlParser: true })
     console.log(`Connected to database`)
@@ -21,17 +22,29 @@ app.set('port', process.env.PORT || 8080)
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+const MongoStore = mongo(session)
+const sessionStore = new MongoStore({ url: mongoURI, collection: 'sessions' })
 app.use(
   session({
     secret: 'banana',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
-    // cookie: { secure: true },
+    cookie: {
+      //  secure: true
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+    store: sessionStore,
   }),
 )
 // passport middleware
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use((req, res, next) => {
+  console.log(req.session)
+  console.log(req.user)
+  next()
+})
 
 app.use('/api', apiRouter)
 

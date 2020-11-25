@@ -9,7 +9,9 @@ passport.serializeUser<UserDocument, string>((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
+    console.log('id', id)
     const user = await User.findById(id)
+    console.log('user', user)
     done(null, user)
   } catch (e) {
     done(e)
@@ -19,7 +21,9 @@ passport.deserializeUser(async (id, done) => {
 const localOptions = {
   usernameField: 'email',
 }
+
 const localStrategy = new LocalStrategy(localOptions, async (email, password, done) => {
+  // called when passport.authenticate is called.
   try {
     const user = await User.findOne({ email })
     if (!user) {

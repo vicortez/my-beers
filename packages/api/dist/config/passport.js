@@ -21,7 +21,9 @@ passport_1.default.serializeUser((user, done) => {
 });
 passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log('id', id);
         const user = yield User_1.User.findById(id);
+        console.log('user', user);
         done(null, user);
     }
     catch (e) {
@@ -32,6 +34,7 @@ const localOptions = {
     usernameField: 'email',
 };
 const localStrategy = new passport_local_1.Strategy(localOptions, (email, password, done) => __awaiter(void 0, void 0, void 0, function* () {
+    // called when passport.authenticate is called.
     try {
         const user = yield User_1.User.findOne({ email });
         if (!user) {
