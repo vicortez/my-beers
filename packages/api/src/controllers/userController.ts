@@ -32,7 +32,7 @@ export const login = (req: Request, res: Response, next: NextFunction): void => 
       return
     }
     if (!user) {
-      res.status(400).send('not found')
+      res.status(401).send(info.message)
       next(null)
       return
     }
@@ -41,7 +41,7 @@ export const login = (req: Request, res: Response, next: NextFunction): void => 
         next(errLogin)
         return
       }
-      res.status(200).send('success')
+      res.status(200).send({ expires: req.session.cookie.expires })
       next(null)
     })
   })(req, res, next)

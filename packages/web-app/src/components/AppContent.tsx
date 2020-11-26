@@ -9,7 +9,7 @@ const Test = (props: any) => {
   return (
     <div>
       <h2>test</h2>
-      <p>{`token: ${auth.accessToken}`}</p>
+      <p>{`auth: ${auth}`}</p>
       <p>{`user: ${auth.user && auth.user.email}`}</p>
     </div>
   )

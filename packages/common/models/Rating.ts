@@ -6,3 +6,9 @@ enum Rating {
 }
 
 export default Rating
+
+export const rating = Object.freeze({
+  DISLIKE: 'DISLIKE',
+  LIKE: 'LIKE',
+  MEGALIKE: 'MEGALIKE',
+})

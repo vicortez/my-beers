@@ -15,7 +15,7 @@ const AppBase = () => {
       <Link to="/beers" style={{ padding: 5 }}>
         beers
       </Link>
-      <button onClick={() => authControl.setAuthState('', null)}>logoff</button>
+      <button onClick={() => authControl.logout()}>logoff</button>
       <hr />
       <Routes>
         <Route path="/login" element={<Login />} />

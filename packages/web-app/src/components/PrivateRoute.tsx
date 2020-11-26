@@ -7,6 +7,6 @@ const isAuthenticated = false
 export const PrivateRoute = (props: any) => {
   // const navigate = useNavigate()
   const authState = useAuthState()
-  if (!authState.accessToken) return <Navigate to="/login" />
+  if (!authState.loggedIn) return <Navigate to="/login" />
   return <Route {...props} />
 }

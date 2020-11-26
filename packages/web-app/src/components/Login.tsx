@@ -16,8 +16,8 @@ export const Login = (props: any) => {
 
   const onSubmit = async (inputs: Inputs) => {
     console.log(inputs)
-    const { data } = await axios.post('oauth2/login', { email: inputs.email, password: inputs.password })
-    authControl.setAuthState(data.accessToken, data.user)
+    // const { data } = await axios.post('oauth2/login', { email: inputs.email, password: inputs.password })
+    authControl.login({ email: inputs.email, password: inputs.password })
     // if (redirectToReferrer)
   }
 

@@ -1,12 +1,14 @@
 import React from 'react'
 import User from '../../models/User'
+import IUserForm from '../../models/UserForm'
 
 export interface AuthState {
-  accessToken: string
+  loggedIn: boolean
   user: User | null
 }
 export interface AuthControl {
-  setAuthState(accessToken: string, user: User | null): void
+  login({ email, password }: IUserForm): Promise<boolean>
+  logout(): void
 }
 
 export const AuthContext = React.createContext<AuthState | undefined>(undefined)

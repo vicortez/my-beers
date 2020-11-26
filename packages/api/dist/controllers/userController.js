@@ -45,7 +45,7 @@ const login = (req, res, next) => {
             return;
         }
         if (!user) {
-            res.status(400).send('not found');
+            res.status(401).send(info.message);
             next(null);
             return;
         }
@@ -54,7 +54,7 @@ const login = (req, res, next) => {
                 next(errLogin);
                 return;
             }
-            res.status(200).send('success');
+            res.status(200).send({ expires: req.session.cookie.expires });
             next(null);
         });
     })(req, res, next);
