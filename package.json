@@ -16,6 +16,7 @@
     ]
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.8",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",

@@ -11,7 +11,7 @@ export interface BeerSearchControl {
 }
 
 const initialBeerSearch: BeerSearchState = {
-  beers: [{ name: 'Colorado Apia', picture: 'pic', rating: Rating.LIKE, _id: 'asdf' }],
+  beers: [{ name: 'Colorado Apia', picture: 'pic', rating: Rating.LIKE, id: 'asdf', userId: 'asd' }],
 }
 
 export const BeerSearchContext = React.createContext<BeerSearchState | undefined>(undefined)
@@ -23,7 +23,7 @@ export const useBeerSearchState = (): BeerSearchState => {
   }
   return context
 }
-export const BeerSearchControlContext = React.createContext<any>(null)
+export const BeerSearchControlContext = React.createContext<BeerSearchControl | undefined>(undefined)
 BeerSearchContext.displayName = 'beerSearchControlContext'
 export const useBeerSearchControl = (): BeerSearchControl => {
   const context = React.useContext(BeerSearchControlContext)
@@ -33,4 +33,4 @@ export const useBeerSearchControl = (): BeerSearchControl => {
   return context
 }
 
-export const useBeerSearch = (): [BeerSearchState, BeerSearchControl] => [useBeerSearch(), useBeerSearchControl()]
+export const useBeerSearch = (): [BeerSearchState, BeerSearchControl] => [useBeerSearchState(), useBeerSearchControl()]
