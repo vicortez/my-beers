@@ -4,19 +4,22 @@ import bcrypt from 'bcryptjs'
 
 export type UserDocument = IUser & mongoose.Document
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-})
+  { timestamps: true },
+)
 
 // hooks
 UserSchema.pre('save', async function cb(next) {

@@ -35,6 +35,8 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     'no-console': 'off',
+    'react/destructuring-assignment': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
   settings: {
     react: {
@@ -46,4 +48,12 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 }

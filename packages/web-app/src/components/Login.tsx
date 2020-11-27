@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useAuth, useAuthControl } from 'common/contexts/Auth'
 import React from 'react'
 import { useForm } from 'react-hook-form'

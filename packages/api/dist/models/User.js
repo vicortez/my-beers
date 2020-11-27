@@ -27,7 +27,7 @@ const UserSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
-});
+}, { timestamps: true });
 // hooks
 UserSchema.pre('save', function cb(next) {
     return __awaiter(this, void 0, void 0, function* () {

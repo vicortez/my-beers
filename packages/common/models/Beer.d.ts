@@ -3,6 +3,7 @@ import Rating from './Rating'
 
 export default interface Beer extends BaseModel {
   name: string
-  picture: string
-  rating: Rating
+  picture?: string
+  rating?: Rating
+  userId: string
 }

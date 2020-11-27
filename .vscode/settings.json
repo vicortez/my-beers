@@ -1,5 +1,8 @@
 {
   "editor.formatOnSave": true,
   "files.eol": "\n",
-  "editor.rulers": [120]
+  "editor.rulers": [
+    120
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

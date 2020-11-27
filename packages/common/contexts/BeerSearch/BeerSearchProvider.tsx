@@ -1,21 +1,26 @@
-import React, { FunctionComponent, useState } from 'react'
+import axios from 'axios'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import Rating from '../../models/Rating'
-import { BeerSearch, BeerSearchContext } from './BeerSearchContext'
+import { BeerSearchContext, BeerSearchState } from './BeerSearchContext'
 
 interface Props {
   children: React.ReactNode
 }
 
-const initialBeerSearch: BeerSearch = {
-  beers: [{ name: 'Colorado Apia', picture: 'pic', rating: Rating.LIKE, _id: 'asdf' }],
+const temp: BeerSearchState = {
+  beers: [{ name: 'Colorado Apia', picture: 'pic', rating: Rating.LIKE, id: 'asdf', userId: 'asdf' }],
 }
 
 export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
-  //TODO conciliate initial context value with initial state value on the provider
-  const [beerSearchState, setBeerSearchState] = useState<BeerSearch>(initialBeerSearch)
-
-  // const setToken = (accessToken: string, user: User) => setAuthState({ ...authState, accessToken, user })
-
+  // TODO conciliate initial context value with initial state value on the provider
+  const [beerSearchState, setBeerSearchState] = useState<BeerSearchState>({ beers: [] })
+  useEffect(() => {
+    console.log('chamando useEffect')
+    ;(async (): Promise<void> => {
+      const { data: beers } = await axios.get('api/beers')
+      setBeerSearchState({ beers })
+    })()
+  }, [])
   return (
     <BeerSearchContext.Provider value={beerSearchState}>
       {/* <AuthControlContext.Provider value={setToken}> */}
