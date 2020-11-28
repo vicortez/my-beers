@@ -1,18 +1,20 @@
 import React from 'react'
-import Beer from '../../models/Beer'
+import IBeer from '../../models/IBeer'
 import Rating from '../../models/Rating'
 
 export interface BeerSearchState {
-  beers: Array<Beer>
+  beers: Array<IBeer>
+  loading: boolean
 }
 export interface BeerSearchControl {
   // login({ email, password }: IUserForm): Promise<boolean>
-  test(): void
+  updateBeers(): void
+  // pushBeer(beer: IBeer): IBeer
 }
 
-const initialBeerSearch: BeerSearchState = {
-  beers: [{ name: 'Colorado Apia', picture: 'pic', rating: Rating.LIKE, id: 'asdf', userId: 'asd' }],
-}
+// const initialBeerSearch: BeerSearchState = {
+//   beers: [{ name: 'Colorado Apia', picture: 'pic', rating: Rating.LIKE, id: 'asdf', userId: 'asd' }],
+// }
 
 export const BeerSearchContext = React.createContext<BeerSearchState | undefined>(undefined)
 BeerSearchContext.displayName = 'beerSearchContext'

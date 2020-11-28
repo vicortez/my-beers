@@ -4,6 +4,8 @@ import { Routes, Route, Link } from 'react-router-dom'
 import { PrivateRoute } from './components/PrivateRoute'
 import { Login } from './components/Login'
 import { AppContent } from './components/AppContent'
+import Container from '@material-ui/core/Container'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 const AppBase = () => {
   const authControl = useAuthControl()
@@ -27,6 +29,9 @@ const AppBase = () => {
 
 export const App = (props: any) => (
   <AuthProvider>
-    <AppBase {...props} />
+    <Container maxWidth="md">
+      <CssBaseline />
+      <AppBase {...props} />
+    </Container>
   </AuthProvider>
 )

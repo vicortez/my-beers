@@ -5,6 +5,7 @@ import { Beers } from './Beers'
 import { BeerSearchProvider } from 'common/contexts/BeerSearch'
 import { useAuthState } from 'common/contexts/Auth'
 import { AddBeer } from './AddBeer'
+import { EditBeer } from './EditBeer'
 
 const Test = (props: any) => {
   const auth = useAuthState()
@@ -24,6 +25,7 @@ const AppContentBase = () => {
       <Route path="/*" element={<p>not found</p>} />
       <Route path="/beers" element={<Beers />} />
       <Route path="/add" element={<AddBeer />} />
+      <Route path="/:id" element={<EditBeer />} />
     </Routes>
   )
 }

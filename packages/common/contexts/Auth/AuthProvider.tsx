@@ -29,7 +29,6 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }: Props) => {
         email,
         password,
       })
-      console.log(res)
       setAuthState((prevState) => ({ ...prevState, loggedIn: true }))
       return true
     } catch (e) {
@@ -39,6 +38,7 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }: Props) => {
   const logout = (): void => setAuthState({ user: null, loggedIn: false })
   return (
     <AuthContext.Provider value={authState}>
+      {/*  TODO doesnt object definition on the function body messes with re-renders? */}
       <AuthControlContext.Provider value={{ login, logout }}>{children}</AuthControlContext.Provider>
     </AuthContext.Provider>
   )

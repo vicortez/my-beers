@@ -24,7 +24,6 @@ export const postBeer = async (req: Request, res: Response, next: NextFunction):
 
 export const getUserBeers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = (req.user as IUser).id
-  console.log(req.user)
   const beers = await Beer.find({ userId })
   res.send(beers)
 }

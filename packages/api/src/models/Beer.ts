@@ -26,5 +26,10 @@ const BeerSchema = new mongoose.Schema(
   },
   { timestamps: true },
 )
-
+BeerSchema.set('toJSON', {
+  virtuals: true,
+})
+BeerSchema.set('toObject', {
+  virtuals: true,
+})
 export const Beer = mongoose.model<BeerDocument>('Beer', BeerSchema)

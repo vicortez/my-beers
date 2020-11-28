@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import IBeer from 'common/models/Beer'
 import { useForm } from 'react-hook-form'
 import ToggleButton from '@material-ui/lab/ToggleButton'
@@ -13,11 +13,17 @@ const TEMP =
 interface Props {
   onSubmit(beer: IBeer): void
   submitButtonText: string
+  beer?: IBeer | undefined
+  loading?: boolean
 }
 
-export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText }) => {
+export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer, loading }) => {
   const [rating, setRating] = useState<Rating | undefined>()
-  const { register, handleSubmit, watch, errors } = useForm<IBeer>()
+  const { register, handleSubmit, watch, errors, reset } = useForm<IBeer>()
+  useEffect(() => {
+    reset(beer)
+    setRating(beer && beer.rating)
+  }, [beer])
   const handleRate = (event: SyntheticEvent, newRating: Rating) => {
     setRating(newRating)
   }
@@ -26,32 +32,35 @@ export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText }) => {
   }
   return (
     <>
-      <form onSubmit={handleSubmit(submitForm)}>
-        <label htmlFor="picture">
-          <input
-            style={{ width: '90px' }}
-            id="picture"
-            name="picture"
-            type="image"
-            alt="beer"
-            src={TEMP}
-            ref={register}
-          ></input>
-        </label>
-        <label htmlFor="name">
-          Name: <input id="name" type="name" name="name" ref={register}></input>
-        </label>
-        <ToggleButtonGroup exclusive value={rating} onChange={handleRate}>
-          <ToggleButton value={Rating.DISLIKE} aria-label="thumbs down">
-            <ThumbDownIcon />
-          </ToggleButton>
-          <ToggleButton value={Rating.LIKE} aria-label="thumbs up">
-            <ThumbUpIcon />
-          </ToggleButton>
-        </ToggleButtonGroup>
-        <hr></hr>
-        <button>{submitButtonText}</button>
-      </form>
+      {!loading && (
+        <form onSubmit={handleSubmit(submitForm)}>
+          <label htmlFor="picture">
+            <input
+              style={{ width: '90px' }}
+              id="picture"
+              name="picture"
+              type="image"
+              alt="beer"
+              src={TEMP}
+              ref={register}
+            />
+          </label>
+          <label htmlFor="name">
+            Name: <input id="name" type="name" name="name" ref={register}></input>
+          </label>
+          <ToggleButtonGroup exclusive value={rating} onChange={handleRate}>
+            <ToggleButton value={Rating.DISLIKE} aria-label="thumbs down">
+              <ThumbDownIcon />
+            </ToggleButton>
+            <ToggleButton value={Rating.LIKE} aria-label="thumbs up">
+              <ThumbUpIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <hr></hr>
+          <button>{submitButtonText}</button>
+        </form>
+      )}
+      {/* {loading && <p>carregando</p>} */}
     </>
   )
 }

@@ -8,6 +8,11 @@
     "eject": "react-scripts eject"
   },
   "private": true,
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "@material-ui/icons": "^4.9.1",
@@ -47,7 +52,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
-    "@types/react": "^16.9.53",
+    "@types/react": "^17.0.0",
     "@types/react-dom": "^16.9.8",
     "customize-cra": "^0.8.0",
     "react-app-rewired": "^2.1.3"

@@ -12,10 +12,11 @@
       "packages/*"
     ],
     "nohoist": [
-      "packages/*"
+      "packages/**"
     ]
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "@types/enzyme": "^3.10.8",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.4.0",
@@ -30,7 +31,6 @@
     "eslint": "^7.14.0"
   },
   "dependencies": {
-    "@types/jest": "^26.0.15",
     "enzyme": "^3.10.0"
   }
 }
