@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { BeerForm } from './BeerForm'
 import IBeer from 'common/models/Beer'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 export const EditBeer = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [beer, setBeer] = useState<IBeer | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -18,8 +19,8 @@ export const EditBeer = () => {
     })()
   }, [])
   const onSubmit = async (beer: IBeer) => {
-    const { data: beers } = await axios.put('api/beers', beer)
-    console.log(beers)
+    const { data: beers } = await axios.patch(`api/beers/${id}`, beer)
+    navigate('/beers')
   }
-  return <BeerForm onSubmit={onSubmit} submitButtonText={'add'} loading={loading} beer={beer} />
+  return <BeerForm onSubmit={onSubmit} submitButtonText={'save'} loading={loading} beer={beer} />
 }

@@ -33,3 +33,17 @@ export const getBeer = async (req: Request, res: Response, next: NextFunction): 
   const beer = await Beer.findById(id)
   res.send(beer)
 }
+
+export const patchBeer = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const updateOptions = { runValidators: true, new: true }
+  const { id } = req.params
+  console.log('reqb', req.body)
+  try {
+    const result = await Beer.findByIdAndUpdate(id, { ...req.body }, updateOptions)
+    console.log('res', result)
+  } catch (e) {
+    res.send(e.message)
+  }
+
+  res.send('beer updated successfully')
+}
