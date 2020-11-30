@@ -15,8 +15,7 @@ export const postBeer = async (req: Request, res: Response, next: NextFunction):
   } as IBeer)
   try {
     const createdBeer = await beer.save()
-    console.log(createdBeer)
-    res.send('beer added successfully')
+    res.send(createdBeer)
   } catch (e) {
     res.status(422).send({ erro: e.message })
   }
@@ -37,13 +36,10 @@ export const getBeer = async (req: Request, res: Response, next: NextFunction): 
 export const patchBeer = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const updateOptions = { runValidators: true, new: true }
   const { id } = req.params
-  console.log('reqb', req.body)
   try {
     const result = await Beer.findByIdAndUpdate(id, { ...req.body }, updateOptions)
-    console.log('res', result)
+    res.send(result)
   } catch (e) {
     res.send(e.message)
   }
-
-  res.send('beer updated successfully')
 }

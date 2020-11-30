@@ -1,16 +1,21 @@
-import { AuthProvider, useAuth, useAuthControl } from 'common/contexts/Auth'
-import React from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
-import { PrivateRoute } from './components/PrivateRoute'
-import { Login } from './components/Login'
-import { AppContent } from './components/AppContent'
 import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@material-ui/core/styles'
+import { AuthProvider, useAuthControl } from 'common/contexts/Auth'
+import React from 'react'
+import { Link, Route, Routes } from 'react-router-dom'
+import { AppContent } from './components/AppContent'
+import { Login } from './components/Login'
+import { PrivateRoute } from './components/PrivateRoute'
+import { createMyTheme } from './utils/createMyTheme'
+
+const theme = createMyTheme()
 
 const AppBase = () => {
   const authControl = useAuthControl()
   return (
     <>
+      {/* TODO remove froom here, add an appbar */}
       <Link to="/test" style={{ padding: 5 }}>
         Test
       </Link>
@@ -29,9 +34,11 @@ const AppBase = () => {
 
 export const App = (props: any) => (
   <AuthProvider>
-    <Container maxWidth="md">
-      <CssBaseline />
-      <AppBase {...props} />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="md">
+        <CssBaseline />
+        <AppBase {...props} />
+      </Container>
+    </ThemeProvider>
   </AuthProvider>
 )
