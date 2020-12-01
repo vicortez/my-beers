@@ -1,0 +1,2 @@
+export const defaultBeerImgUrl =
+  'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/2bbb1e28-ddac-43db-9855-4e9dc1bcf1ea/default_beer_img.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201201T005932Z&X-Amz-Expires=86400&X-Amz-Signature=d18807329ae56ade66da87f17d74958523e6c0710efb58f302e7ee5cd7d712c6&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22default_beer_img.jpg%22'

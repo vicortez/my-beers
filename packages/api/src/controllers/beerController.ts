@@ -5,10 +5,10 @@ import { Beer } from '../models/Beer'
 
 export const postBeer = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.user && (req.user as IUser).id
-  const { name, rating } = req.body
+  const { name, rating, picture } = req.body
   // TODO validate
   const beer = new Beer({
-    picture: 'base64url',
+    picture,
     name,
     rating,
     userId,

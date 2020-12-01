@@ -1,132 +1,96 @@
-import React, { SyntheticEvent, useEffect, useState, useCallback } from 'react'
-import IBeer from 'common/models/Beer'
-import { useForm } from 'react-hook-form'
-import ToggleButton from '@material-ui/lab/ToggleButton'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import Container from '@material-ui/core/Container'
+import { makeStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
 import ThumbDownIcon from '@material-ui/icons/ThumbDown'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import ToggleButton from '@material-ui/lab/ToggleButton'
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import IBeer from 'common/models/Beer'
 import Rating from 'common/models/Rating'
-import { useDropzone } from 'react-dropzone'
-import { makeStyles } from '@material-ui/core/styles'
-import clsx from 'clsx'
-
-const TEMP =
-  'https://previews.123rf.com/images/alexpokusay/alexpokusay1601/alexpokusay160100117/50832219-barrel-of-beer-sketch-style-vector-illustration-old-engraving-imitation-hand-drawn-sketch-imitation.jpg'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { ImageUpload, UploadedFile } from './ImageUpload'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
-  dropzone: {
-    color: '#bdbdbd',
-    padding: '20px',
-    border: '3px dashed #eeeeee',
-    backgroundColor: 'white',
-    '&:hover': {
-      cursor: 'pointer',
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  formElement: {
+    marginTop: '12px',
+    '&:first-child': {
+      marginTop: '0',
     },
   },
-  dropReject: {
-    borderColor: 'red',
-  },
-  dropAccept: {
-    borderColor: 'lightgreen',
-  },
-  dropActive: {
-    backgroundColor: '#eeeeee',
-    color: 'black',
-  },
 }))
+
+const getBase64 = async (file: Blob): Promise<string | undefined> => {
+  var reader = new FileReader()
+  reader.readAsDataURL(file as Blob)
+
+  return new Promise((resolve, reject) => {
+    reader.onload = () => resolve(reader.result as any)
+    reader.onerror = (error) => reject(error)
+  })
+}
 
 interface Props {
   onSubmit(beer: IBeer): void
   submitButtonText: string
   beer?: IBeer | undefined
-  loading?: boolean
+  // loading?: boolean
 }
 
-export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer, loading }) => {
+export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer }) => {
   const classes = useStyles()
 
   const [rating, setRating] = useState<Rating | undefined>()
+  const [pictureURL, setPictureURL] = useState<string>()
   const { register, handleSubmit, watch, errors, reset } = useForm<IBeer>()
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFileNames(acceptedFiles.map((file) => file.name))
-  }, [])
-
-  const [fileNames, setFileNames] = useState<string[]>([])
-  const { acceptedFiles, getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
-    onDrop,
-    maxSize: 5242880,
-    minSize: 2,
-    maxFiles: 1,
-    accept: 'image/*',
-  })
 
   useEffect(() => {
     reset(beer)
     setRating(beer && beer.rating)
+    setPictureURL(beer && beer.picture)
   }, [beer])
   const handleRate = (event: SyntheticEvent, newRating: Rating) => {
     setRating(newRating)
   }
-  const submitForm = async (beer: IBeer) => {
+  const handleSubmitFile = async (file: UploadedFile): Promise<void> => {
+    let picture = ''
+    if (file) {
+      picture = (await getBase64(file)) || ''
+    }
+    setPictureURL(picture)
+  }
+  const submitForm = async (baseBeer: IBeer) => {
+    const beer: IBeer = { ...baseBeer, rating, picture: pictureURL }
     console.log(beer)
-    // onSubmit({ ...beer, rating })
+    onSubmit(beer)
   }
   return (
     <>
-      {!loading && (
-        <form onSubmit={handleSubmit(submitForm)}>
-          <label htmlFor="picture">
-            <input
-              style={{ width: '90px' }}
-              id="picture"
-              name="picture"
-              type="image"
-              alt="beer"
-              src={TEMP}
-              ref={register}
-            />
-          </label>
+      <form onSubmit={handleSubmit(submitForm)} className={classes.root}>
+        <Container maxWidth="xs" className={classes.formElement}>
+          <ImageUpload onSubmitFile={handleSubmitFile} pictureURL={pictureURL} />
+        </Container>
+        <TextField id="name" name="name" label="Name" inputRef={register} className={classes.formElement} fullWidth />
 
-          <hr></hr>
-          <div
-            {...getRootProps({
-              className: clsx({
-                [classes.dropzone]: true,
-                [classes.dropReject]: isDragReject,
-                [classes.dropAccept]: isDragAccept,
-                [classes.dropActive]: isDragActive,
-              }),
-            })}
-          >
-            <input {...getInputProps()} name="teste" ref={register} />
-            <p>Import your beer picture by dragging it or clicking here</p>
-            <div>
-              <strong>Files:</strong>
-              <ul>
-                {fileNames.map((fileName) => (
-                  <li key={fileName}>{fileName}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <hr></hr>
+        <ToggleButtonGroup exclusive value={rating} onChange={handleRate} className={classes.formElement}>
+          <ToggleButton value={Rating.DISLIKE} aria-label="thumbs down">
+            <ThumbDownIcon />
+          </ToggleButton>
+          <ToggleButton value={Rating.LIKE} aria-label="thumbs up">
+            <ThumbUpIcon />
+          </ToggleButton>
+        </ToggleButtonGroup>
 
-          <label htmlFor="name">
-            Name: <input id="name" type="name" name="name" ref={register}></input>
-          </label>
-          <ToggleButtonGroup exclusive value={rating} onChange={handleRate}>
-            <ToggleButton value={Rating.DISLIKE} aria-label="thumbs down">
-              <ThumbDownIcon />
-            </ToggleButton>
-            <ToggleButton value={Rating.LIKE} aria-label="thumbs up">
-              <ThumbUpIcon />
-            </ToggleButton>
-          </ToggleButtonGroup>
-          <hr></hr>
-          <button>{submitButtonText}</button>
-        </form>
-      )}
-      {/* {loading && <p>carregando</p>} */}
+        <Button className={classes.formElement} variant="outlined" fullWidth type="submit">
+          {submitButtonText}
+        </Button>
+      </form>
     </>
   )
 }

@@ -22,5 +22,10 @@ export const EditBeer = () => {
     const { data: beers } = await axios.patch(`api/beers/${id}`, beer)
     navigate('/beers')
   }
-  return <BeerForm onSubmit={onSubmit} submitButtonText={'save'} loading={loading} beer={beer} />
+  return (
+    <>
+      {!loading && <BeerForm onSubmit={onSubmit} submitButtonText={'save'} beer={beer} />}
+      {loading && <p>loading..</p>}
+    </>
+  )
 }
