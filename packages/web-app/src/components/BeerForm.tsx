@@ -9,8 +9,10 @@ import IBeer from 'common/models/Beer'
 import Rating from 'common/models/Rating'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ImageUpload, UploadedFile } from './ImageUpload'
 import Button from '@material-ui/core/Button'
+import clsx from 'clsx'
+import { ImageUpload, UploadedFile } from './ImageUpload'
+import { MegaLikeIcon } from './icons/MegaLikeIcon'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const getBase64 = async (file: Blob): Promise<string | undefined> => {
-  var reader = new FileReader()
+  const reader = new FileReader()
   reader.readAsDataURL(file as Blob)
 
   return new Promise((resolve, reject) => {
-    reader.onload = () => resolve(reader.result as any)
-    reader.onerror = (error) => reject(error)
+    reader.onload = (): void => (reader.result ? resolve(reader.result as string) : resolve(undefined))
+    reader.onerror = (error): void => reject(error)
   })
 }
 
@@ -55,7 +57,7 @@ export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer }) 
     setRating(beer && beer.rating)
     setPictureURL(beer && beer.picture)
   }, [beer])
-  const handleRate = (event: SyntheticEvent, newRating: Rating) => {
+  const handleRate = (event: SyntheticEvent, newRating: Rating): void => {
     setRating(newRating)
   }
   const handleSubmitFile = async (file: UploadedFile): Promise<void> => {
@@ -65,10 +67,10 @@ export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer }) 
     }
     setPictureURL(picture)
   }
-  const submitForm = async (baseBeer: IBeer) => {
-    const beer: IBeer = { ...baseBeer, rating, picture: pictureURL }
+  const submitForm = async (baseBeer: IBeer): Promise<void> => {
+    const submittedBeer: IBeer = { ...baseBeer, rating, picture: pictureURL }
     console.log(beer)
-    onSubmit(beer)
+    onSubmit(submittedBeer)
   }
   return (
     <>
@@ -78,12 +80,21 @@ export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer }) 
         </Container>
         <TextField id="name" name="name" label="Name" inputRef={register} className={classes.formElement} fullWidth />
 
-        <ToggleButtonGroup exclusive value={rating} onChange={handleRate} className={classes.formElement}>
+        <ToggleButtonGroup
+          exclusive
+          value={rating}
+          onChange={handleRate}
+          className={clsx({ [classes.formElement]: true })}
+          size="large"
+        >
           <ToggleButton value={Rating.DISLIKE} aria-label="thumbs down">
             <ThumbDownIcon />
           </ToggleButton>
           <ToggleButton value={Rating.LIKE} aria-label="thumbs up">
-            <ThumbUpIcon />
+            <ThumbUpIcon style={{ color: '#48a70b' }} />
+          </ToggleButton>
+          <ToggleButton value={Rating.MEGALIKE} aria-label="mega thumbs up">
+            <MegaLikeIcon svgProps={{ style: { overflow: 'visible' } }} />
           </ToggleButton>
         </ToggleButtonGroup>
 

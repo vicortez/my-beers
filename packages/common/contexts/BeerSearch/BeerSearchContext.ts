@@ -1,10 +1,13 @@
 import React from 'react'
-import IBeer from '../../models/IBeer'
+import IBeer from '../../models/Beer'
 import Rating from '../../models/Rating'
 
 export interface BeerSearchState {
   beers: Array<IBeer>
   loading: boolean
+  skip: number
+  limit: number
+  fetchedAll: boolean
 }
 export interface BeerSearchControl {
   // login({ email, password }: IUserForm): Promise<boolean>

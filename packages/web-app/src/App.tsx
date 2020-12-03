@@ -11,7 +11,7 @@ import { createMyTheme } from './utils/createMyTheme'
 
 const theme = createMyTheme()
 
-const AppBase = () => {
+const AppBase: React.FC = () => {
   const authControl = useAuthControl()
   return (
     <>
@@ -22,7 +22,12 @@ const AppBase = () => {
       <Link to="/beers" style={{ padding: 5 }}>
         beers
       </Link>
-      <button onClick={() => authControl.logout()}>logoff</button>
+      <Link to="/login" style={{ padding: 5 }}>
+        login
+      </Link>
+      <button type="button" onClick={(): void => authControl.logout()}>
+        logoff
+      </button>
       <hr />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -32,7 +37,7 @@ const AppBase = () => {
   )
 }
 
-export const App = (props: any) => (
+export const App: React.FC = (props: Record<string, unknown>) => (
   <AuthProvider>
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">

@@ -54,7 +54,7 @@ export const ImageUpload: React.FC<IProps> = ({ onSubmitFile, pictureURL }) => {
   const [file, setFile] = useState<UploadedFile>()
 
   useEffect(() => {
-    return () => {
+    return (): void => {
       if (file && file.preview) {
         URL.revokeObjectURL(file.preview)
       }

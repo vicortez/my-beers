@@ -37,6 +37,8 @@ module.exports = {
     'no-console': 'off',
     'react/destructuring-assignment': 'off',
     'react-hooks/exhaustive-deps': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'no-return-assign': 'off',
   },
   settings: {
     react: {

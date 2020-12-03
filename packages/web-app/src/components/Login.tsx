@@ -7,13 +7,13 @@ interface Inputs {
   password: string
   email: string
 }
-export const Login = (props: any) => {
+export const Login: React.FC = () => {
   const [redirectToReferrer, setRedirectToReferrer] = React.useState<RedirectUrl>(false)
   const { register, handleSubmit, watch, errors } = useForm<Inputs>()
   const authState = useAuth()
   const authControl = useAuthControl()
 
-  const onSubmit = async (inputs: Inputs) => {
+  const onSubmit = async (inputs: Inputs): Promise<void> => {
     console.log(inputs)
     // const { data } = await axios.post('oauth2/login', { email: inputs.email, password: inputs.password })
     authControl.login({ email: inputs.email, password: inputs.password })
@@ -26,12 +26,12 @@ export const Login = (props: any) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">
-          Email: <input id="email" name="email" ref={register}></input>
+          Email: <input id="email" name="email" ref={register} />
         </label>
         <label htmlFor="password">
-          Password: <input id="password" type="password" name="password" ref={register}></input>
+          Password: <input id="password" type="password" name="password" ref={register} />
         </label>
-        <button>signin</button>
+        <button type="submit">signin</button>
       </form>
     </div>
   )

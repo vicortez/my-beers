@@ -1,13 +1,13 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { PrivateRoute } from './PrivateRoute'
-import { Beers } from './Beers'
 import { BeerSearchProvider } from 'common/contexts/BeerSearch'
 import { useAuthState } from 'common/contexts/Auth'
+import { PrivateRoute } from './PrivateRoute'
+import { Beers } from './Beers'
 import { AddBeer } from './AddBeer'
 import { EditBeer } from './EditBeer'
 
-const Test = (props: any) => {
+const Test: React.FC = () => {
   const auth = useAuthState()
   return (
     <div>
@@ -18,7 +18,7 @@ const Test = (props: any) => {
   )
 }
 
-const AppContentBase = () => {
+const AppContentBase: React.FC = () => {
   return (
     <Routes>
       <Route path="/test" element={<Test />} />
@@ -30,8 +30,8 @@ const AppContentBase = () => {
   )
 }
 
-export const AppContent = (props: any) => (
+export const AppContent: React.FC = () => (
   <BeerSearchProvider>
-    <AppContentBase {...props} />
+    <AppContentBase />
   </BeerSearchProvider>
 )
