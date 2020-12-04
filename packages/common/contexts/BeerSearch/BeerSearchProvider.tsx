@@ -1,5 +1,5 @@
 import axios, { Canceler } from 'axios'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState, useCallback } from 'react'
 import Rating from '../../models/Rating'
 import IBeer from '../../models/Beer'
 import { BeerSearchContext, BeerSearchState, BeerSearchControlContext, BeerSearchControl } from './BeerSearchContext'
@@ -23,11 +23,10 @@ export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
   })
   const updateBeers = async (): Promise<void> => {
     const { skip, limit } = beerSearchState
-    console.log(beerSearchState)
     try {
       console.log('skip', skip)
       console.log('limit', limit)
-      if (skip === 0) setBeerSearchState((prevState) => ({ ...prevState, loading: true }))
+      setBeerSearchState((prevState) => ({ ...prevState, loading: true }))
       const { data: beers } = await axios.get<IBeer[]>('api/beers', {
         params: {
           skip,
@@ -52,10 +51,13 @@ export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
       }
     }
   }
+  const teste = (): void => console.log(beerSearchState)
 
-  const [beerSearchControl] = useState<BeerSearchControl>({
-    updateBeers,
-  })
+  // const [beerSearchControl] = useState<BeerSearchControl>({
+  //   updateBeers,
+  // })
+
+  const getBeerSearchControl = useCallback(() => ({ updateBeers }), [beerSearchState])
 
   useEffect(() => {
     return (): void => cancelBeerFetchPromise()
@@ -68,7 +70,9 @@ export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
   // }, [])
   return (
     <BeerSearchContext.Provider value={beerSearchState}>
-      <BeerSearchControlContext.Provider value={beerSearchControl}>{props.children}</BeerSearchControlContext.Provider>
+      <BeerSearchControlContext.Provider value={getBeerSearchControl()}>
+        {props.children}
+      </BeerSearchControlContext.Provider>
     </BeerSearchContext.Provider>
   )
 }

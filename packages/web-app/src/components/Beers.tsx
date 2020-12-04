@@ -5,11 +5,37 @@ import { useBeerSearch } from 'common/contexts/BeerSearch/BeerSearchContext'
 import { useNavigate } from 'react-router-dom'
 import { defaultBeerImgUrl } from '../defaultBeerImgUrl'
 
+const useInfiniteScroll = (
+  onTrigger: () => void,
+  loading: boolean,
+  reachedEnd: boolean,
+): [lastElement: (node: HTMLLIElement) => void] => {
+  const observer: React.MutableRefObject<undefined> | { current: IntersectionObserver } = useRef()
+  const lastElement = useCallback(
+    (node: HTMLLIElement): void => {
+      if (loading) {
+        return
+      }
+      if (observer.current) {
+        observer.current.disconnect()
+      }
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !reachedEnd) {
+          console.log('last element is visible, triggering new data Fetch')
+          onTrigger()
+        }
+      })
+    },
+    [loading, reachedEnd],
+  )
+  return [lastElement]
+}
+
 export const Beers: React.FC = () => {
   const [beerSearchState, beerSearchControl] = useBeerSearch()
   const navigate = useNavigate()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const observer: React.MutableRefObject<undefined> | { current: any } = useRef()
+
+  const observer: React.MutableRefObject<undefined> | { current: IntersectionObserver } = useRef()
   const lastBeerElement = useCallback(
     (node: HTMLLIElement): void => {
       if (beerSearchState.loading) {
@@ -30,27 +56,17 @@ export const Beers: React.FC = () => {
     },
     [beerSearchState.loading, beerSearchState.fetchedAll],
   )
+
   useEffect(() => {
     beerSearchControl.updateBeers()
-  }, [beerSearchControl])
+  }, [])
   return (
     <>
-      {!beerSearchState.loading && (
-        <ul>
-          {beerSearchState.beers.map((beer, index) => {
-            if (beerSearchState.beers.length === index + 1) {
-              return (
-                <li key={beer.id} onClick={(): void => navigate(`/${beer.id}`)} ref={lastBeerElement}>
-                  <img src={beer.picture || defaultBeerImgUrl} alt={`${beer.name}`} style={{ width: '200px' }} />
-                  <br />
-                  {beer.name}
-                  <br />
-                  rating: {beer.rating}
-                </li>
-              )
-            }
+      <ul>
+        {beerSearchState.beers.map((beer, index) => {
+          if (beerSearchState.beers.length === index + 1) {
             return (
-              <li key={beer.id} onClick={(): void => navigate(`/${beer.id}`)}>
+              <li key={beer.id} onClick={(): void => navigate(`/${beer.id}`)} ref={lastBeerElement}>
                 <img src={beer.picture || defaultBeerImgUrl} alt={`${beer.name}`} style={{ width: '200px' }} />
                 <br />
                 {beer.name}
@@ -58,9 +74,19 @@ export const Beers: React.FC = () => {
                 rating: {beer.rating}
               </li>
             )
-          })}
-        </ul>
-      )}
+          }
+          return (
+            <li key={beer.id} onClick={(): void => navigate(`/${beer.id}`)}>
+              <img src={beer.picture || defaultBeerImgUrl} alt={`${beer.name}`} style={{ width: '200px' }} />
+              <br />
+              {beer.name}
+              <br />
+              rating: {beer.rating}
+            </li>
+          )
+        })}
+      </ul>
+
       {beerSearchState.loading && <p>loading..</p>}
       <div>
         <button type="button">filter</button>
