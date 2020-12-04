@@ -17,7 +17,7 @@ export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
   const [beerSearchState, setBeerSearchState] = useState<BeerSearchState>({
     beers: [],
     loading: false,
-    limit: 4,
+    limit: 8,
     skip: 0,
     fetchedAll: false,
   })
@@ -65,7 +65,6 @@ export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
 
   // useEffect(() => {
   //   console.log('chamando useEffect')
-  //   setBeerSearchState((prevState) => ({ ...prevState, loading: true }))
   //   updateBeers()
   // }, [])
   return (
