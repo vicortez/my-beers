@@ -1,13 +1,13 @@
 import React, { useCallback, useRef } from 'react'
 
-export const useInfiniteScroll = (
+export const useInfiniteScroll = <T>(
   onTrigger: () => void,
   loading: boolean,
   loadedAll: boolean,
-): [lastElement: (node: HTMLLIElement) => void] => {
-  const observer: React.MutableRefObject<undefined> | { current: IntersectionObserver } = useRef()
+): [lastElement: (node: T) => void] => {
+  const observer = useRef<IntersectionObserver | null>(null)
   const lastElementRef = useCallback(
-    (node: HTMLLIElement): void => {
+    (node: T): void => {
       if (loading) {
         return
       }
@@ -21,7 +21,7 @@ export const useInfiniteScroll = (
         }
       })
       if (node) {
-        observer.current.observe(node)
+        observer.current.observe((node as unknown) as Element)
       }
     },
     [loading, loadedAll],

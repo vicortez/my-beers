@@ -106,7 +106,6 @@ export const ImageUpload: React.FC<IProps> = ({ onSubmitFile, pictureURL }) => {
         )}
         {pictureURL && <img src={pictureURL} alt="beer" className={classes.img} />}
       </div>
-      {/* <aside className={classes.thumbsContainer}>{thumbs}</aside> */}
     </>
   )
 }

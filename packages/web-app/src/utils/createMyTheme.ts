@@ -3,29 +3,35 @@ import { purple, green, orange, grey } from '@material-ui/core/colors'
 import { Theme } from '@material-ui/core'
 
 declare module '@material-ui/core/styles/createMuiTheme' {
-  // interface Theme {
-  //   status: {
-  //     danger: string
-  //   }
-  //   overrides: {
-  //     MuiToggleButton: {
-  //       selected: {
-  //         backGroundColor: string
-  //       }
-  //     }
-  //   }
-  // }
+  interface Theme {
+    footerButtonHeight: string
+
+    //   status: {
+    //     danger: string
+    //   }
+    //   overrides: {
+    //     MuiToggleButton: {
+    //       selected: {
+    //         backGroundColor: string
+    //       }
+    //     }
+    //   }
+  }
   // allow configuration using `createMuiTheme`
-  // interface ThemeOptions {
-  //   appDrawer?: {
-  //     width?: React.CSSProperties['width']
-  //     breakpoint?: Breakpoint
-  //   }
-  // }
+  interface ThemeOptions {
+    footerButtonHeight: string
+
+    //   appDrawer?: {
+    //     width?: React.CSSProperties['width']
+    //     breakpoint?: Breakpoint
+    // }
+  }
 }
 
 export const createMyTheme = (options?: ThemeOptions): Theme => {
   return createMuiTheme({
+    footerButtonHeight: '6em',
+
     // overrides: {
     //   MuiToggleButton: {
     //     selected: {
