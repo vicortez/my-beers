@@ -6,7 +6,7 @@
     "start": "concurrently -k -p \"[{name}]\" -n \"tsc,nodemon\" -c \"cyan,green\" \"npm run watch-ts\" \"npm run start-nodemon\"",
     "watch-ts": "tsc -w",
     "start-nodemon": "nodemon dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Test placeholder\" "
   },
   "author": "",
   "license": "ISC",
