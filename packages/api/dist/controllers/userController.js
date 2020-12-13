@@ -61,7 +61,7 @@ const login = (req, res, next) => {
 };
 exports.login = login;
 const logout = (req, res, next) => {
-    req.logOut();
+    req.logout();
     res.send('ok');
 };
 exports.logout = logout;

@@ -48,7 +48,7 @@ export const login = (req: Request, res: Response, next: NextFunction): void => 
 }
 
 export const logout = (req: Request, res: Response, next: NextFunction): void => {
-  req.logOut()
+  req.logout()
   res.send('ok')
 }
 

@@ -17,7 +17,7 @@ userRouter.post(
   register,
 )
 userRouter.post('/login', login)
-userRouter.get('/logout', logout)
+userRouter.get('/logout', isAuthenticated, logout)
 userRouter.get('/:id', isAuthenticated, getUser)
 
 userRouter.use(errors())
