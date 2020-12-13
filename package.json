@@ -5,7 +5,9 @@
     "bootstrap": "lerna bootstrap",
     "start": "lerna run start --stream",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "test": "jest"
+    "test": "jest",
+    "build": "lerna run build",
+    "serve": ""
   },
   "workspaces": {
     "packages": [
