@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "jest",
     "build": "lerna run build",
-    "serve-prod": "npm run serve-prod --scope=api"
+    "serve-prod": "lerna run serve-prod --scope=api"
   },
   "workspaces": {
     "packages": [
