@@ -1,6 +1,9 @@
 {
   "name": "my-beers",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "start": "lerna run start --stream",
