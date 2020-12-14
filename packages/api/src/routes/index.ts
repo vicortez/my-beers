@@ -6,6 +6,6 @@ import { isAuthenticated } from '../middleware/authMiddleware'
 const apiRouter = Router()
 
 apiRouter.use('/users', userRouter)
-apiRouter.use('/beers', beerRouter)
+apiRouter.use('/beers', isAuthenticated, beerRouter)
 
 export { apiRouter }
