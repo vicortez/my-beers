@@ -7,6 +7,7 @@ const userRouter = Router()
 
 userRouter.post(
   '/register',
+  isAuthenticated,
   validate({
     body: {
       email: Joi.string().email().required(),
