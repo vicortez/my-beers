@@ -3,9 +3,6 @@
   "version": "0.2.0",
   "description": "",
   "private": true,
-  "engines": {
-    "node": "10.x"
-  },
   "scripts": {
     "start": "concurrently -k -p \"[{name}]\" -n \"tsc,nodemon\" -c \"cyan,green\" \"npm run watch-ts\" \"npm run start-nodemon\"",
     "watch-ts": "tsc -w",

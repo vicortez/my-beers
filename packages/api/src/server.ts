@@ -14,7 +14,7 @@ const app = express()
 
 app.set('port', process.env.PORT || 8080)
 const mongoURI = getIsProd()
-  ? `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_SERVER_URL}/my-beers`
+  ? `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_SERVER_URL}`
   : 'mongodb://localhost/my-beers'
 ;(async (): Promise<void> => {
   try {
