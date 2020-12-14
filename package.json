@@ -11,7 +11,7 @@
     "test": "jest",
     "build": "lerna run build",
     "serve-prod": "lerna run serve-prod --scope=api",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false"
   },
   "workspaces": {
     "packages": [
