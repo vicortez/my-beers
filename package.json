@@ -10,7 +10,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "jest",
     "build": "lerna run build",
-    "serve-prod": "lerna run serve-prod --scope=api"
+    "serve-prod": "lerna run serve-prod --scope=api",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
   },
   "workspaces": {
     "packages": [
@@ -32,10 +33,10 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "prettier": "^2.2.0",
     "typescript": "^4.1.0",
-    "eslint": "^7.14.0"
+    "eslint": "^7.14.0",
+    "lerna": "^3.22.1"
   },
   "dependencies": {
-    "enzyme": "^3.10.0",
-    "lerna": "^3.22.1"
+    "enzyme": "^3.10.0"
   }
 }
