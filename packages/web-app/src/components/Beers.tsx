@@ -1,4 +1,5 @@
 import Button from '@material-ui/core/Button'
+import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -17,28 +18,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.footerButtonHeight,
     color: 'pink',
   },
-  paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    width: '100%',
-  },
-  image: {
-    width: 128,
-    height: 128,
-  },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  },
   footer: {
     position: 'fixed',
     bottom: '0',
     left: '0',
     right: '0',
-    // width: '100%',
     height: theme.footerButtonHeight,
+  },
+  footerContent: {
+    height: 'inherit',
   },
   footerButton: {
     height: '100%',
@@ -79,23 +67,25 @@ export const Beers: React.FC = () => {
         })}
       </List>
       {beerSearchState.loading && <p>loading..</p>}
-      <Grid className={classes.footer} container>
-        <Grid item xs>
-          <Button type="button" variant="contained" className={classes.footerButton}>
-            <FunnelIcon svgProps={{ fontSize: 'large' }} />
-          </Button>
+      <Container maxWidth="md" className={classes.footer}>
+        <Grid container className={classes.footerContent}>
+          <Grid item xs>
+            <Button type="button" variant="contained" className={classes.footerButton}>
+              <FunnelIcon svgProps={{ fontSize: 'large' }} />
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <Button
+              type="button"
+              onClick={(): void => navigate('/add')}
+              className={classes.footerButton}
+              variant="contained"
+            >
+              <AddIcon fontSize="large" />
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Button
-            type="button"
-            onClick={(): void => navigate('/add')}
-            className={classes.footerButton}
-            variant="contained"
-          >
-            <AddIcon fontSize="large" />
-          </Button>
-        </Grid>
-      </Grid>
+      </Container>
     </>
   )
 }
