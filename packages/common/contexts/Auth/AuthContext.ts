@@ -5,10 +5,14 @@ import IUserForm from '../../models/UserForm'
 export interface AuthState {
   loggedIn: boolean
   user: User | null
+  expires?: string
 }
+export type CallBackFn = ((authState: AuthState) => void) | null
+
 export interface AuthControl {
-  login({ email, password }: IUserForm, callBack?: () => void): Promise<boolean>
+  login({ email, password }: IUserForm, callBack?: CallBackFn): Promise<boolean>
   logout(): void
+  setAuthState(authState: AuthState): void
 }
 
 export const AuthContext = React.createContext<AuthState | undefined>(undefined)

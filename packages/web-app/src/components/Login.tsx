@@ -9,6 +9,7 @@ import { useAuth, useAuthControl } from 'common/contexts/Auth'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useSearchParams, useNavigate } from 'react-router-dom'
+import { cookies } from '../utils/cookies'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,8 +45,9 @@ export const Login: React.FC = () => {
   const onSubmit = async (inputs: Inputs): Promise<void> => {
     const redirectTo = searchParams.get('redirect')
 
-    authControl.login({ email: inputs.email, password: inputs.password }, () => {
+    authControl.login({ email: inputs.email, password: inputs.password }, (authState) => {
       navigate(redirectTo || '/beers')
+      cookies.set('authState', authState)
     })
   }
 

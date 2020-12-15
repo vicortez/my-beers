@@ -5,6 +5,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAuth } from 'common/contexts/Auth'
 import { Link, useNavigate } from 'react-router-dom'
+import { cookies } from '../utils/cookies'
 
 const useStyles = makeStyles((theme) => ({
   bar: {
@@ -24,6 +25,7 @@ export const AppBar: React.FC = () => {
     navigate('/login')
     if (auth.loggedIn) {
       authControl.logout()
+      cookies.remove('authState')
     }
   }
   return (

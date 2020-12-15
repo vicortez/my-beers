@@ -38,8 +38,7 @@ app.use(
     saveUninitialized: true,
     cookie: {
       // secure: false,
-      maxAge: 1000 * 2,
-      // maxAge: 1000 * 60 * 60 * 24,
+      maxAge: 1000 * 60 * 60 * 24,
     },
     store: sessionStore,
   }),
@@ -48,11 +47,11 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use((req, res, next) => {
-  console.log('session', req.session)
-  // console.log(req.user)
-  next()
-})
+// app.use((req, res, next) => {
+//   console.log('session', req.session)
+//   console.log(req.user)
+//   next()
+// })
 
 app.use('/api', apiRouter)
 
