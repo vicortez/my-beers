@@ -1,12 +1,12 @@
 import axios from 'axios'
-import React, { FunctionComponent, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import User from '../../models/User'
 import { AuthContext, AuthControlContext, AuthState } from './AuthContext'
 
 interface Props {
   children: React.ReactNode
 }
+type callBackFn = (() => void) | null
 
 const initialAuth: AuthState = {
   loggedIn: false,
@@ -15,17 +15,20 @@ const initialAuth: AuthState = {
 
 export const AuthProvider: FunctionComponent<Props> = ({ children }: Props) => {
   const [authState, setAuthState] = useState<AuthState>(initialAuth)
-  const navigate = useNavigate()
-
+  const loginCallBackFnContainer = useRef<callBackFn>(null)
   useEffect(() => {
-    if (authState.loggedIn) {
-      navigate('/beers')
+    if (authState.loggedIn && loginCallBackFnContainer.current) {
+      loginCallBackFnContainer.current()
+      loginCallBackFnContainer.current = null
     }
-  }, [authState, navigate])
+  }, [authState])
   // const setState = (newState: AuthState): void => setAuthState((prevAuthState) => ({ ...prevAuthState, ...newState }))
-  const login = async ({ email, password }: User): Promise<boolean> => {
+  const login = async ({ email, password }: User, callBack: () => void): Promise<boolean> => {
+    if (callBack) {
+      loginCallBackFnContainer.current = callBack
+    }
     try {
-      const res = await axios.post(`/api/users/login`, {
+      await axios.post(`/api/users/login`, {
         email,
         password,
       })
@@ -35,10 +38,13 @@ export const AuthProvider: FunctionComponent<Props> = ({ children }: Props) => {
       return false
     }
   }
-  const logout = (): void => setAuthState({ user: null, loggedIn: false })
+  const logout = (): void => {
+    setAuthState({ user: null, loggedIn: false })
+    axios.get(`/api/users/logout`)
+  }
   return (
     <AuthContext.Provider value={authState}>
-      {/*  TODO doesnt object definition on the function body messes with re-renders? */}
+      {/*  TODO doesnt object definition on the function body messes with re-renders of child components? */}
       <AuthControlContext.Provider value={{ login, logout }}>{children}</AuthControlContext.Provider>
     </AuthContext.Provider>
   )

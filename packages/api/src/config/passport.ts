@@ -9,7 +9,7 @@ passport.serializeUser<UserDocument, string>((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    console.log('id', id)
+    console.log('user id', id)
     const user = await User.findById(id)
     console.log('user', user)
     done(null, user)

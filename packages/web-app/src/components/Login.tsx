@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { useAuth, useAuthControl } from 'common/contexts/Auth'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,26 +30,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-type RedirectUrl = string | boolean
 interface Inputs {
   password: string
   email: string
 }
 export const Login: React.FC = () => {
-  const [redirectToReferrer, setRedirectToReferrer] = React.useState<RedirectUrl>(false)
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const { register, handleSubmit, watch, errors } = useForm<Inputs>()
-  const authState = useAuth()
   const authControl = useAuthControl()
   const classes = useStyles()
 
   const onSubmit = async (inputs: Inputs): Promise<void> => {
-    console.log(inputs)
-    // const { data } = await axios.post('oauth2/login', { email: inputs.email, password: inputs.password })
-    authControl.login({ email: inputs.email, password: inputs.password })
-    // if (redirectToReferrer)
-  }
+    const redirectTo = searchParams.get('redirect')
 
-  console.log('auth', authState)
+    authControl.login({ email: inputs.email, password: inputs.password }, () => {
+      navigate(redirectTo || '/beers')
+    })
+  }
 
   return (
     <Container maxWidth="xs">

@@ -24,7 +24,6 @@ export const postBeer = async (req: Request, res: Response, next: NextFunction):
 export const getUserBeers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = (req.user as IUser).id
   const { skip, limit } = req.query
-  console.log(skip, limit)
   const beers = await Beer.find({ userId })
     .sort([
       ['rating', -1],
@@ -32,7 +31,6 @@ export const getUserBeers = async (req: Request, res: Response, next: NextFuncti
     ])
     .limit(Number(limit) || 0)
     .skip(Number(skip) || 0)
-  console.log(beers.map((beer) => beer.name))
   res.send(beers)
 }
 

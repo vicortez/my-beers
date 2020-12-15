@@ -7,7 +7,7 @@ export interface AuthState {
   user: User | null
 }
 export interface AuthControl {
-  login({ email, password }: IUserForm): Promise<boolean>
+  login({ email, password }: IUserForm, callBack?: () => void): Promise<boolean>
   logout(): void
 }
 

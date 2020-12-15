@@ -21,10 +21,9 @@ export const AppBar: React.FC = () => {
   const [auth, authControl] = useAuth()
   const navigate = useNavigate()
   const handleClickLog = (): void => {
+    navigate('/login')
     if (auth.loggedIn) {
       authControl.logout()
-    } else {
-      navigate('/login')
     }
   }
   return (

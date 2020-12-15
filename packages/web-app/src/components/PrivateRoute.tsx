@@ -1,13 +1,12 @@
 import React from 'react'
-import { Navigate, Route, useNavigate } from 'react-router-dom'
+import { Navigate, Route, useLocation } from 'react-router-dom'
 import { RouteProps } from 'react-router'
 import { useAuthState } from 'common/contexts/Auth'
 
-const isAuthenticated = false
-
 export const PrivateRoute: React.FC<RouteProps> = (props) => {
-  // const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const url = pathname ? `/login?redirect=${pathname}` : '/login'
   const authState = useAuthState()
-  if (!authState.loggedIn) return <Navigate to="/login" />
+  if (!authState.loggedIn) return <Navigate to={url} />
   return <Route {...props} />
 }
