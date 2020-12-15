@@ -12,17 +12,23 @@ interface Props {
 //   beers: [{ name: 'Colorado Apia', picture: 'pic', rating: Rating.LIKE, id: 'asdf', userId: 'asdf' }],
 // }
 
+const defaultBeerSearchState = {
+  beers: [],
+  loading: false,
+  limit: 8,
+  skip: 0,
+  fetchedAll: false,
+}
+
 export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
   let cancelBeerFetchPromise: Canceler = () => console.warn('not set up yet')
-  const [beerSearchState, setBeerSearchState] = useState<BeerSearchState>({
-    beers: [],
-    loading: false,
-    limit: 8,
-    skip: 0,
-    fetchedAll: false,
-  })
-  const updateBeers = async (): Promise<void> => {
-    const { skip, limit } = beerSearchState
+  const [beerSearchState, setBeerSearchState] = useState<BeerSearchState>(defaultBeerSearchState)
+
+  const updateBeers = async ({ reload = false } = {}): Promise<void> => {
+    const { skip, limit } = reload ? defaultBeerSearchState : beerSearchState
+    if (reload) {
+      setBeerSearchState(defaultBeerSearchState)
+    }
     try {
       console.log('skip', skip)
       console.log('limit', limit)

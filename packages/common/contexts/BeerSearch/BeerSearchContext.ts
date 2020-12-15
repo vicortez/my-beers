@@ -8,8 +8,12 @@ export interface BeerSearchState {
   limit: number
   fetchedAll: boolean
 }
+
+interface UpdateBeersOptions {
+  reload?: boolean
+}
 export interface BeerSearchControl {
-  updateBeers(): void
+  updateBeers(options?: UpdateBeersOptions): void
 }
 
 export const BeerSearchContext = React.createContext<BeerSearchState | undefined>(undefined)

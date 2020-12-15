@@ -3,6 +3,7 @@ import { FileRejection, useDropzone } from 'react-dropzone'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import AddIcon from '@material-ui/icons/Add'
+import imageCompression from 'browser-image-compression'
 
 const useStyles = makeStyles((theme) => ({
   dropzone: {
@@ -60,19 +61,26 @@ export const ImageUpload: React.FC<IProps> = ({ onSubmitFile, pictureURL }) => {
       }
     }
   }, [])
-  const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+  const onDrop = useCallback(async (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
     if (rejectedFiles.length > 0) {
       // TODO "error toast" something
       console.log('rejectedFiles', rejectedFiles)
+      return
     }
     const uploadedFile: UploadedFile = acceptedFiles[0]
+
     if (uploadedFile) {
+      const compresserOptions = {
+        maxSizeMB: 3.5,
+        // onProgress: Function, // optional, a function takes one progress argument (percentage from 0 to 100)
+      }
+      const compressedImageFile: File = (await imageCompression(uploadedFile, compresserOptions)) as File
       setFile(
-        Object.assign(uploadedFile, {
-          preview: URL.createObjectURL(uploadedFile),
+        Object.assign(compressedImageFile, {
+          preview: URL.createObjectURL(compressedImageFile),
         }),
       )
-      onSubmitFile(uploadedFile)
+      onSubmitFile(compressedImageFile)
     }
   }, [])
 

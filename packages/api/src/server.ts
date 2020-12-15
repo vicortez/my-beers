@@ -25,7 +25,7 @@ const mongoURI = getIsProd()
   }
 })()
 
-app.use(express.json())
+app.use(express.json({ limit: '4mb' }))
 app.use(express.urlencoded({ extended: false }))
 
 const MongoStore = mongo(session)

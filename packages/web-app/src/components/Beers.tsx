@@ -58,7 +58,7 @@ export const Beers: React.FC = () => {
   )
 
   useEffect(() => {
-    beerSearchControl.updateBeers()
+    beerSearchControl.updateBeers({ reload: true })
   }, [])
   return (
     <>
