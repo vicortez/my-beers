@@ -70,7 +70,7 @@ export const Beers: React.FC = () => {
       <Container maxWidth="md" className={classes.footer}>
         <Grid container className={classes.footerContent}>
           <Grid item xs>
-            <Button type="button" variant="contained" className={classes.footerButton}>
+            <Button type="button" variant="contained" className={classes.footerButton} disabled>
               <FunnelIcon svgProps={{ fontSize: 'large' }} />
             </Button>
           </Grid>

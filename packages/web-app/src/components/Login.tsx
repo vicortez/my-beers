@@ -43,10 +43,10 @@ export const Login: React.FC = () => {
   const classes = useStyles()
 
   const onSubmit = async (inputs: Inputs): Promise<void> => {
-    const redirectTo = searchParams.get('redirect')
-
+    const redirectTo = searchParams.get('redirect') || '/beers'
+    console.log('will redirect to', redirectTo)
     authControl.login({ email: inputs.email, password: inputs.password }, (authState) => {
-      navigate(redirectTo || '/beers')
+      navigate(redirectTo)
       cookies.set('authState', authState)
     })
   }

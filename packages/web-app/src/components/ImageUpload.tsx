@@ -71,7 +71,7 @@ export const ImageUpload: React.FC<IProps> = ({ onSubmitFile, pictureURL }) => {
 
     if (uploadedFile) {
       const compresserOptions = {
-        maxSizeMB: 3.5,
+        maxSizeMB: 3,
         // onProgress: Function, // optional, a function takes one progress argument (percentage from 0 to 100)
       }
       const compressedImageFile: File = (await imageCompression(uploadedFile, compresserOptions)) as File

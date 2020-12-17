@@ -23,7 +23,6 @@ const AppBase: React.FC = () => {
     if (authState && authState.loggedIn) {
       console.log('detected previous login')
       authControl.setAuthState(authState)
-      // cookies.remove('authState')
     }
   }, [])
 
