@@ -1,6 +1,6 @@
 {
   "name": "web-app",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
@@ -19,7 +19,7 @@
     "browser-image-compression": "^1.0.13",
     "cloudinary": "^1.23.0",
     "clsx": "^1.1.1",
-    "common": "^0.2.0",
+    "common": "^0.3.0",
     "customize-cra": "^0.8.0",
     "history": "^5.0.0",
     "react": "^17.0.1",
