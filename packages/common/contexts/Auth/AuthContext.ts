@@ -1,6 +1,6 @@
 import React from 'react'
 import User from '../../models/User'
-import IUserForm from '../../models/UserForm'
+import IUserLoginForm from '../../models/UserLoginForm'
 
 export interface AuthState {
   loggedIn: boolean
@@ -10,7 +10,7 @@ export interface AuthState {
 export type CallBackFn = ((authState: AuthState) => void) | null
 
 export interface AuthControl {
-  login({ email, password }: IUserForm, callBack?: CallBackFn): Promise<boolean>
+  login({ email, password }: IUserLoginForm, callBack?: CallBackFn): Promise<boolean>
   logout(): void
   setAuthState(authState: AuthState): void
 }

@@ -1,9 +1,12 @@
-import React, { SyntheticEvent, useEffect, useState, useCallback } from 'react'
+import React, { SyntheticEvent, useEffect, useState, useCallback, useRef } from 'react'
 import { FileRejection, useDropzone } from 'react-dropzone'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import AddIcon from '@material-ui/icons/Add'
 import imageCompression from 'browser-image-compression'
+// import { Cloudinary } from 'cloudinary-core'
+
+// const cloudName = 'cort3z'
 
 const useStyles = makeStyles((theme) => ({
   dropzone: {
@@ -50,9 +53,9 @@ interface IProps {
   pictureURL?: string
 }
 
-// TODO props?
 export const ImageUpload: React.FC<IProps> = ({ onSubmitFile, pictureURL }) => {
   const [file, setFile] = useState<UploadedFile>()
+  // const cloudinaryCoreRef = useRef<Cloudinary>(new Cloudinary({ cloud_name: 'cort3z' }))
 
   useEffect(() => {
     return (): void => {
