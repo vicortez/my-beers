@@ -31,8 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CLOUDINARY_API_URL = 'https://api.cloudinary.com/v1_1/cort3z/upload'
-
 const getBase64 = async (file: Blob): Promise<string | undefined> => {
   const reader = new FileReader()
   reader.readAsDataURL(file as Blob)
@@ -79,10 +77,12 @@ export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer }) 
     if (file) {
       setLoading(true)
       const {
-        data: { signature, timestamp, apiKey },
-      } = await axios.get<{ signature: string; timestamp: number; apiKey: string }>('api/beers/img-upload-signature')
+        data: { signature, timestamp, apiKey, apiUrl },
+      } = await axios.get<{ signature: string; timestamp: number; apiKey: string; apiUrl: string }>(
+        'api/beers/img-upload-signature',
+      )
       const formData: FormData = getFormData(file, signature, timestamp, apiKey)
-      const { data: assetMeta } = await axios.post<UploadApiResponse>(CLOUDINARY_API_URL, formData)
+      const { data: assetMeta } = await axios.post<UploadApiResponse>(apiUrl, formData)
       console.log('assetMeta', assetMeta)
       picture = assetMeta.secure_url
       setLoading(false)

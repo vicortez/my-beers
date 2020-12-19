@@ -1,12 +1,14 @@
 import React from 'react'
 import IBeer from '../../models/Beer'
 
+export type IBeerSort = Array<[string, number]>
 export interface BeerSearchState {
   beers: Array<IBeer>
   loading: boolean
   skip: number
   limit: number
   fetchedAll: boolean
+  sort: IBeerSort
 }
 
 interface UpdateBeersOptions {
@@ -14,6 +16,7 @@ interface UpdateBeersOptions {
 }
 export interface BeerSearchControl {
   updateBeers(options?: UpdateBeersOptions): void
+  setSort(sort: IBeerSort): void
 }
 
 export const BeerSearchContext = React.createContext<BeerSearchState | undefined>(undefined)

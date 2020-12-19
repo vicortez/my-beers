@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
+import Fade from '@material-ui/core/Fade'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -11,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useInfiniteScroll } from '../utils/useInfiniteScroll'
 import { BeerCard } from './BeerCard'
 import { FunnelIcon } from './icons/FunnelIcon'
+import { SortSelectorDialog } from './SortSelectorDialog'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,9 +34,23 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: '100%',
   },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }))
 
 export const Beers: React.FC = () => {
+  const [sortModalopen, setSortModalopen] = React.useState<boolean>(false)
+  const handleOpenSortModal = (): void => {
+    setSortModalopen(true)
+  }
+
+  const handleCloseSortModal = (): void => {
+    setSortModalopen(false)
+  }
   const [beerSearchState, beerSearchControl] = useBeerSearch()
   const navigate = useNavigate()
   const classes = useStyles()
@@ -70,7 +86,14 @@ export const Beers: React.FC = () => {
       <Container maxWidth="md" className={classes.footer}>
         <Grid container className={classes.footerContent}>
           <Grid item xs>
-            <Button type="button" variant="contained" className={classes.footerButton} disabled>
+            <Button
+              type="button"
+              variant="contained"
+              className={classes.footerButton}
+              onClick={(): void => {
+                handleOpenSortModal()
+              }}
+            >
               <FunnelIcon svgProps={{ fontSize: 'large' }} />
             </Button>
           </Grid>
@@ -86,6 +109,7 @@ export const Beers: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
+      <SortSelectorDialog open={sortModalopen} onClose={handleCloseSortModal} />
     </>
   )
 }

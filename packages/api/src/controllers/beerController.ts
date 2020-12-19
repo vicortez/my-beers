@@ -4,8 +4,6 @@ import IUser from 'common/models/User'
 import { NextFunction, Request, Response } from 'express'
 import { Beer } from '../models/Beer'
 
-const CLOUDINARY_API_KEY = '881524122397926'
-
 export const postBeer = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.user && (req.user as IUser).id
   const { name, rating, picture } = req.body
@@ -26,12 +24,14 @@ export const postBeer = async (req: Request, res: Response, next: NextFunction):
 
 export const getUserBeers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = (req.user as IUser).id
-  const { skip, limit } = req.query
+  const { skip, limit, sort } = req.query
   const beers = await Beer.find({ userId })
-    .sort([
-      ['rating', -1],
-      ['createdAt', -1],
-    ])
+    .sort(
+      sort || [
+        ['rating', -1],
+        ['createdAt', -1],
+      ],
+    )
     .limit(Number(limit) || 0)
     .skip(Number(skip) || 0)
   res.send(beers)
@@ -66,5 +66,5 @@ export const imgUploadSignature = async (req: Request, res: Response, next: Next
     // public_id: 'sample_image'
   }
   const signature = cloudinary.utils.api_sign_request(requestOptions, process.env.CLOUDINARY_API_SECRET)
-  res.send({ signature, timestamp, apiKey: CLOUDINARY_API_KEY })
+  res.send({ signature, timestamp, apiKey: process.env.CLOUDINARY_API_KEY, apiUrl: process.env.CLOUDINARY_API_URL })
 }
