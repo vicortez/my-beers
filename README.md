@@ -20,8 +20,8 @@ A simple app to save the beers you have tasted. It was developed as an exercise 
 - Save the beers you tasted and give them a like, dislike or MEGALike
 - Sort trough your beers at any time to remember the ones you liked and the ones you disliked. Never wonder if you tasted a beer again
 
-![example image 1](/docs_assets/screenshot_order_feature.png)
-![example image 2](/docs_assets/screenshot_edit_beer.png)
+![example image 1](docs_assets/screenshot_order_feature.png)
+![example image 2](screenshot_edit_beer.png)
 
 ## api
 
