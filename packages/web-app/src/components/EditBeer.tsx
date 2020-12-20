@@ -19,7 +19,7 @@ export const EditBeer: React.FC = () => {
     })()
   }, [])
   const onSubmit = async (submittedBeer: IBeer): Promise<void> => {
-    const { data: beers } = await axios.patch(`api/beers/${id}`, submittedBeer)
+    await axios.patch(`api/beers/${id}`, submittedBeer)
     navigate('/beers')
   }
   return (

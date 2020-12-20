@@ -1,15 +1,14 @@
 import axios, { Canceler } from 'axios'
-import React, { FunctionComponent, useEffect, useState, useCallback } from 'react'
-import Rating from '../../models/Rating'
+import qs from 'qs'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
 import IBeer from '../../models/Beer'
 import {
   BeerSearchContext,
-  BeerSearchState,
-  BeerSearchControlContext,
   BeerSearchControl,
+  BeerSearchControlContext,
+  BeerSearchState,
   IBeerSort,
 } from './BeerSearchContext'
-import qs from 'qs'
 
 interface Props {
   children: React.ReactNode
@@ -26,20 +25,22 @@ const defaultBeerSearchState: BeerSearchState = {
   skip: 0,
   fetchedAll: false,
   sort: [
-    ['rating', -1],
     ['createdAt', -1],
+    // ['rating', -1],
+    // ['name', 1],
   ],
 }
 
 export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
   let cancelBeerFetchPromise: Canceler = () => console.warn('not set up yet')
   const [beerSearchState, setBeerSearchState] = useState<BeerSearchState>(defaultBeerSearchState)
+  const [initialRender, setIninitalRender] = useState<boolean>(true)
+  useEffect(() => {
+    setIninitalRender(false)
+  }, [])
+  const updateBeers = async (): Promise<void> => {
+    const { skip, limit, sort } = beerSearchState
 
-  const updateBeers = async ({ reload = false } = {}): Promise<void> => {
-    const { skip, limit, sort } = reload ? defaultBeerSearchState : beerSearchState
-    if (reload) {
-      setBeerSearchState(defaultBeerSearchState)
-    }
     try {
       console.log('skip', skip)
       console.log('limit', limit)
@@ -54,7 +55,6 @@ export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
         paramsSerializer: (params) => qs.stringify(params),
       })
       const fetchedAll = beers.length < limit
-
       setBeerSearchState((prevState) => ({
         ...prevState,
         beers: [...prevState.beers, ...beers],
@@ -70,13 +70,40 @@ export const BeerSearchProvider: FunctionComponent<Props> = (props) => {
       }
     }
   }
+
+  const refreshBeers = async (): Promise<void> => {
+    const refreshedBeerSearchState = { ...defaultBeerSearchState, sort: beerSearchState.sort }
+    setBeerSearchState((prevState) => ({ ...prevState, loading: true }))
+    const { data: beers } = await axios.get<IBeer[]>('api/beers', {
+      params: {
+        skip: refreshedBeerSearchState.skip,
+        limit: refreshedBeerSearchState.limit,
+        sort: refreshedBeerSearchState.sort,
+      },
+      cancelToken: new axios.CancelToken((c): Canceler => (cancelBeerFetchPromise = c)),
+      paramsSerializer: (params) => qs.stringify(params),
+    })
+    const fetchedAll = beers.length < refreshedBeerSearchState.limit
+    setBeerSearchState({
+      ...refreshedBeerSearchState,
+      beers,
+      loading: false,
+      fetchedAll,
+      skip: refreshedBeerSearchState.skip + refreshedBeerSearchState.limit,
+    })
+  }
+
   const setSort = (sort: IBeerSort): void => setBeerSearchState((prevState) => ({ ...prevState, sort }))
+  useEffect(() => {
+    if (!initialRender) {
+      console.log('changed', [beerSearchState.sort[0][0], beerSearchState.sort[0][1]])
+      refreshBeers()
+    }
+  }, [beerSearchState.sort[0][0], beerSearchState.sort[0][1]])
 
-  // const [beerSearchControl] = useState<BeerSearchControl>({
-  //   updateBeers,
-  // })
-
-  const getBeerSearchControl = useCallback<() => BeerSearchControl>(() => ({ updateBeers, setSort }), [beerSearchState])
+  const getBeerSearchControl = useCallback<() => BeerSearchControl>(() => ({ updateBeers, setSort, refreshBeers }), [
+    beerSearchState,
+  ])
 
   useEffect(() => {
     return (): void => cancelBeerFetchPromise()

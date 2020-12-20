@@ -5,10 +5,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-import { useAuth, useAuthControl } from 'common/contexts/Auth'
+import { useAuthControl } from 'common/contexts/Auth'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { cookies } from '../utils/cookies'
 
 const useStyles = makeStyles((theme) => ({

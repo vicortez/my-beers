@@ -1,10 +1,10 @@
 import MUIAppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
-import Toolbar from '@material-ui/core/Toolbar'
-import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import Toolbar from '@material-ui/core/Toolbar'
 import { useAuth } from 'common/contexts/Auth'
-import { Link, useNavigate } from 'react-router-dom'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { cookies } from '../utils/cookies'
 
 const useStyles = makeStyles((theme) => ({

@@ -25,10 +25,12 @@ export const postBeer = async (req: Request, res: Response, next: NextFunction):
 export const getUserBeers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = (req.user as IUser).id
   const { skip, limit, sort } = req.query
+  console.log('sort', sort)
   const beers = await Beer.find({ userId })
+    .collation({ locale: 'en' })
     .sort(
       sort || [
-        ['rating', -1],
+        // ['rating', -1],
         ['createdAt', -1],
       ],
     )

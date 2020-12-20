@@ -11,11 +11,12 @@ export interface BeerSearchState {
   sort: IBeerSort
 }
 
-interface UpdateBeersOptions {
-  reload?: boolean
-}
+// interface UpdateBeersOptions {
+//   reload?: boolean
+// }
 export interface BeerSearchControl {
-  updateBeers(options?: UpdateBeersOptions): void
+  updateBeers(): void
+  refreshBeers(): void
   setSort(sort: IBeerSort): void
 }
 

@@ -1,10 +1,9 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { BeerSearchProvider } from 'common/contexts/BeerSearch'
 import { useAuthState } from 'common/contexts/Auth'
-import { PrivateRoute } from './PrivateRoute'
-import { Beers } from './Beers'
+import { BeerSearchProvider } from 'common/contexts/BeerSearch'
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 import { AddBeer } from './AddBeer'
+import { Beers } from './Beers'
 import { EditBeer } from './EditBeer'
 
 const Test: React.FC = () => {

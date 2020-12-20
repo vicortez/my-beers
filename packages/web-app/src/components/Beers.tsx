@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
-import Fade from '@material-ui/core/Fade'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -62,7 +61,7 @@ export const Beers: React.FC = () => {
   )
 
   useEffect(() => {
-    beerSearchControl.updateBeers({ reload: true })
+    beerSearchControl.refreshBeers()
   }, [])
   return (
     <>
@@ -109,7 +108,7 @@ export const Beers: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
-      <SortSelectorDialog open={sortModalopen} onClose={handleCloseSortModal} />
+      <SortSelectorDialog open={sortModalopen} onClose={handleCloseSortModal} sort={beerSearchState.sort} />
     </>
   )
 }

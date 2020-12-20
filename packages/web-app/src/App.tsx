@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import { AuthProvider, useAuthControl } from 'common/contexts/Auth'
 import { AuthState } from 'common/contexts/Auth/AuthContext'
 import React, { useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { AppBar } from './components/AppBar'
 import { AppContent } from './components/AppContent'
 import { Login } from './components/Login'
@@ -15,7 +15,6 @@ import { createMyTheme } from './utils/createMyTheme'
 const theme = createMyTheme()
 
 const AppBase: React.FC = () => {
-  const navigate = useNavigate()
   const authControl = useAuthControl()
   useEffect(() => {
     const authState: AuthState = cookies.get('authState')

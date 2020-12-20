@@ -31,16 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const getBase64 = async (file: Blob): Promise<string | undefined> => {
-  const reader = new FileReader()
-  reader.readAsDataURL(file as Blob)
-
-  return new Promise((resolve, reject) => {
-    reader.onload = (): void => (reader.result ? resolve(reader.result as string) : resolve(undefined))
-    reader.onerror = (error): void => reject(error)
-  })
-}
-
 const getFormData = (file: File, signature: string, timestamp: number, apiKey: string): FormData => {
   const formData = new FormData()
   formData.append('file', file)

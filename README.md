@@ -9,10 +9,16 @@ A simple app to save the beers you have tasted. It was developed as an exercise 
 - [ ] Tests with Jest
 - [ ] Material-ui theming
 - [x] Session based authentication with Passportjs
-- [ ] Support for oauth2 authorization providers, implemented login with google
-- [x] CDN-based media storage
-- [x] Heroku hosting featuring Continuous Delivery via automatic deploys by Heroku-Github integration
-- [ ] React Native mobile app
+- [ ] Login with Google, and support for other oauth2 authorization providers
+- [x] CDN-based media storage with a cloud service
+- [x] Heroku hosting, featuring Continuous Delivery via automatic deploys with Heroku-Github integration
+- [ ] React Native mobile app that consumes the same API and shares some logic with the Web App
+
+## Features
+
+- Login with your email or google account
+- Save the beers you tasted and give them a like, dislike or MEGALike
+- Sort trough your beers at any time to remember the ones you liked and the ones you disliked. Never wonder if you tasted a beer again
 
 ## api
 
