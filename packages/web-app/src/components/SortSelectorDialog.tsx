@@ -13,10 +13,6 @@ import { SortThumbsUpDownDesc } from './icons/SortThumbsUpDownDesc'
 import { SortTimeAsc } from './icons/SortTimeAsc'
 import { SortTimeDesc } from './icons/SortTimeDesc'
 
-interface ISortNameIconMap {
-  [key: string]: JSX.Element
-}
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     margin: {
