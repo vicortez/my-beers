@@ -84,16 +84,6 @@ export const SortSelectorDialog: React.FC<IProps> = ({ open, onClose, sort }) =>
             >
               <SortAlphDesc svgProps={{ className: classes.icon }} />
             </IconButton>
-
-            <IconButton
-              aria-label="sort by time"
-              className={classes.margin}
-              onClick={(): void => {
-                setSort([['createdAt', 1]])
-              }}
-            >
-              <SortTimeDesc svgProps={{ className: classes.icon }} />
-            </IconButton>
             <IconButton
               aria-label="sort by time"
               className={classes.margin}
@@ -103,12 +93,21 @@ export const SortSelectorDialog: React.FC<IProps> = ({ open, onClose, sort }) =>
             >
               <SortTimeAsc svgProps={{ className: classes.icon }} />
             </IconButton>
+            <IconButton
+              aria-label="sort by time"
+              className={classes.margin}
+              onClick={(): void => {
+                setSort([['createdAt', 1]])
+              }}
+            >
+              <SortTimeDesc svgProps={{ className: classes.icon }} />
+            </IconButton>
 
             <IconButton
               aria-label="sort by rating"
               className={classes.margin}
               onClick={(): void => {
-                setSort([['rating', 1]])
+                setSort([['rating', -1]])
               }}
             >
               <SortThumbsUpDownDesc svgProps={{ className: classes.icon }} />
@@ -117,7 +116,7 @@ export const SortSelectorDialog: React.FC<IProps> = ({ open, onClose, sort }) =>
               aria-label="sort by rating"
               className={classes.margin}
               onClick={(): void => {
-                setSort([['rating', -1]])
+                setSort([['rating', 1]])
               }}
             >
               <SortThumbsUpDownAsc svgProps={{ className: classes.icon }} />
