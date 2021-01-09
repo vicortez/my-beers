@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import { useAuth } from 'common/contexts/Auth'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { cookies } from '../utils/cookies'
+import { removeItemFromLocalStorage } from '../utils/localStorage'
 
 const useStyles = makeStyles((theme) => ({
   bar: {
@@ -25,7 +25,7 @@ export const AppBar: React.FC = () => {
     navigate('/login')
     if (auth.loggedIn) {
       authControl.logout()
-      cookies.remove('authState')
+      removeItemFromLocalStorage('authState')
     }
   }
   return (

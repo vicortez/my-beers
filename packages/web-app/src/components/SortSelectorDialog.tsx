@@ -54,7 +54,6 @@ interface IProps {
 export const SortSelectorDialog: React.FC<IProps> = ({ open, onClose, sort }) => {
   const classes = useStyles()
   const { setSort } = useBeerSearchControl()
-  const theme = useTheme()
 
   return (
     <Modal open={open} onClose={onClose} aria-labelledby="beer sorting" keepMounted>

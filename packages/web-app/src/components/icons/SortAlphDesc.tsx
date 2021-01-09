@@ -1,6 +1,5 @@
+import SvgIcon from '@material-ui/core/SvgIcon'
 import React from 'react'
-import { withTheme } from '@material-ui/core/styles'
-import SvgIcon, { SvgIconTypeMap } from '@material-ui/core/SvgIcon'
 
 interface IProps {
   color?: string

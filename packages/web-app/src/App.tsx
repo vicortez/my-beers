@@ -5,12 +5,12 @@ import { AuthProvider, useAuthControl } from 'common/contexts/Auth'
 import { AuthState } from 'common/contexts/Auth/AuthContext'
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { getLocalStorage } from './utils/localStorage'
 import { AppBar } from './components/AppBar'
 import { AppContent } from './components/AppContent'
 import { Login } from './components/Login'
 import { OauthRedirect } from './components/OauthRedirect'
 import { PrivateRoute } from './components/PrivateRoute'
-import { cookies } from './utils/cookies'
 import { createMyTheme } from './utils/createMyTheme'
 
 const theme = createMyTheme()
@@ -18,7 +18,7 @@ const theme = createMyTheme()
 const AppBase: React.FC = () => {
   const authControl = useAuthControl()
   useEffect(() => {
-    const authState: AuthState = cookies.get('authState')
+    const authState = getLocalStorage<AuthState>('authState')
     console.log('authState', authState)
     if (authState && authState.loggedIn) {
       console.log('detected previous login')

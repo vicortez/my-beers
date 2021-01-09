@@ -10,7 +10,7 @@ import React from 'react'
 import GoogleButton from 'react-google-button'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { cookies } from '../utils/cookies'
+import { setLocalStorage } from '../utils/localStorage'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,7 +51,7 @@ export const Login: React.FC = () => {
     console.log('will redirect to', redirectTo)
     authControl.login({ email: inputs.email, password: inputs.password }, (authState) => {
       navigate(redirectTo)
-      cookies.set('authState', authState)
+      setLocalStorage('authState', authState)
     })
   }
 
