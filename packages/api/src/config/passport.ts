@@ -66,8 +66,9 @@ const tokenStrategy = new CustomStrategy(async (req, done) => {
     const user = await User.findOne({ email })
     if (!user) {
       if (process.env.ACCEPT_NEW_USERS) {
-        // TODO criar user
-        return done({ message: 'nop' }, 'aqui')
+        const newUser = new User({ email })
+        const savedUser = await newUser.save()
+        return done(null, savedUser)
       }
       return done({ message: 'New users are not allowed at the moment' }, false)
     }

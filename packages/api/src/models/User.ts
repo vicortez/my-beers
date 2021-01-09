@@ -15,7 +15,6 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true },
@@ -24,7 +23,7 @@ const UserSchema = new mongoose.Schema(
 // hooks
 UserSchema.pre('save', async function cb(next) {
   const user: UserDocument = this as UserDocument
-  if (user.isNew || user.isModified('password')) {
+  if ((user.isNew || user.isModified('password')) && user.password) {
     try {
       const salt = await bcrypt.genSalt(9)
       const hash = await bcrypt.hash(user.password, salt)
