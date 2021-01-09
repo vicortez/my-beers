@@ -51,7 +51,7 @@ export const login = (req: Request, res: Response, next: NextFunction): void => 
 export const tokenLogin = (req: Request, res: Response, next: NextFunction): void => {
   passport.authenticate('token-strategy', (err: Error, user: UserDocument): void => {
     if (err) {
-      next(err)
+      res.status(401).send({ message: err.message })
       return
     }
     if (!user) {

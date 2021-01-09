@@ -65,7 +65,7 @@ const tokenStrategy = new CustomStrategy(async (req, done) => {
     }
     const user = await User.findOne({ email })
     if (!user) {
-      if (process.env.ACCEPT_NEW_USERS) {
+      if (process.env.ACCEPT_NEW_USERS === 'yes') {
         const newUser = new User({ email })
         const savedUser = await newUser.save()
         return done(null, savedUser)
