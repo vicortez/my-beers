@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import passport from 'passport'
 import { IVerifyOptions } from 'passport-local'
+import querystring from 'querystring'
 import { User, UserDocument } from '../models/User'
 
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -41,10 +42,54 @@ export const login = (req: Request, res: Response, next: NextFunction): void => 
         next(errLogin)
         return
       }
-      res.status(200).send({ expires: req.session.cookie.expires })
+      res.status(200).send({ expires: req.session.cookie.expires, email: user.email })
       next(null)
     })
   })(req, res, next)
+}
+
+export const tokenLogin = (req: Request, res: Response, next: NextFunction): void => {
+  passport.authenticate('token-strategy', (err: Error, user: UserDocument): void => {
+    if (err) {
+      next(err)
+      return
+    }
+    if (!user) {
+      res.status(401).send('Error retreiving user')
+      next(null)
+      return
+    }
+    req.login(user, (errLogin): void => {
+      if (errLogin) {
+        next(errLogin)
+        return
+      }
+      res.status(200).send({ expires: req.session.cookie.expires, email: user.email })
+      next(null)
+    })
+  })(req, res, next)
+}
+
+export const requestGoogleAuthUrl = (req: Request, res: Response, next: NextFunction): void => {
+  // https://www.googleapis.com/auth/userinfo.email
+  // https://www.googleapis.com/auth/userinfo.profile
+
+  // https://www.googleapis.com/oauth2/v3/userinfo
+
+  // scopes email profile openid
+  // 'https://www.googleapis.com/auth/userinfo.profile',
+  // 'https://www.googleapis.com/auth/drive.metadata.readonly',
+  const params = {
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+    response_type: 'token',
+    include_granted_scopes: true,
+    state: 'meuestado',
+    scope: 'openid profile email',
+  }
+  const query = querystring.stringify(params)
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?${query}`
+  res.send(url)
 }
 
 export const logout = (req: Request, res: Response, next: NextFunction): void => {

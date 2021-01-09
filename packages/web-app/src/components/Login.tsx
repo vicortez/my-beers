@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { useAuthControl } from 'common/contexts/Auth'
 import React from 'react'
+import GoogleButton from 'react-google-button'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { cookies } from '../utils/cookies'
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  marginBottom: {
+    marginBottom: '10px',
   },
 }))
 
@@ -51,16 +55,26 @@ export const Login: React.FC = () => {
     })
   }
 
+  const handleGoogleLogin = async (): Promise<void> => {
+    const requestUrl = await authControl.requestGoogleAuthUrl()
+    window.location.href = requestUrl
+  }
+
   return (
     <Container maxWidth="xs">
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography variant="h5" gutterBottom>
           Sign in
         </Typography>
+        <div className="g-signin2" data-onsuccess="onSignIn" />
+        <GoogleButton
+          label="Sign in with Google"
+          onClick={handleGoogleLogin}
+          className={classes.marginBottom}
+          // type="light"
+        />
+        <Typography variant="h6">or</Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-          {/* <label htmlFor="email">
-          Email: <input id="email" name="email" ref={register} />
-        </label> */}
           <TextField
             variant="outlined"
             margin="normal"
@@ -88,7 +102,7 @@ export const Login: React.FC = () => {
           <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             Sign In
-          </Button>{' '}
+          </Button>
         </form>
       </div>
     </Container>

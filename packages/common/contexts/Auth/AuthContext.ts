@@ -9,10 +9,20 @@ export interface AuthState {
 }
 export type CallBackFn = ((authState: AuthState) => void) | null
 
+export interface IoauthResponse {
+  accessToken: string
+  authuser?: string
+  expiresIn: string
+  prompt?: string
+  scope: string
+  state?: string
+}
 export interface AuthControl {
   login({ email, password }: IUserLoginForm, callBack?: CallBackFn): Promise<boolean>
+  tokenLogin(oauthResponse: IoauthResponse, callBack?: CallBackFn): Promise<boolean>
   logout(): void
   setAuthState(authState: AuthState): void
+  requestGoogleAuthUrl(): Promise<string>
 }
 
 export const AuthContext = React.createContext<AuthState | undefined>(undefined)
