@@ -42,7 +42,8 @@ interface Inputs {
 export const Login: React.FC = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { register, handleSubmit, watch, errors } = useForm<Inputs>()
+  const { register, handleSubmit } = useForm<Inputs>()
+  // const { register, handleSubmit, watch, errors } = useForm<Inputs>()
   const authControl = useAuthControl()
   const classes = useStyles()
 

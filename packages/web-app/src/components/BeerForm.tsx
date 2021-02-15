@@ -52,7 +52,8 @@ export const BeerForm: React.FC<Props> = ({ onSubmit, submitButtonText, beer }) 
   const [loading, setLoading] = useState<boolean>(false)
   const [rating, setRating] = useState<Rating | undefined>()
   const [pictureURL, setPictureURL] = useState<string>()
-  const { register, handleSubmit, watch, errors, reset } = useForm<IBeer>()
+  // const { register, handleSubmit, watch, errors, reset } = useForm<IBeer>()
+  const { register, handleSubmit, reset } = useForm<IBeer>()
 
   useEffect(() => {
     reset(beer)

@@ -9,7 +9,7 @@ A simple app to save the beers you have tasted. It was developed as an exercise 
 - [ ] Tests with Jest
 - [ ] Material-ui theming
 - [x] Session based authentication with Passportjs
-- [ ] Login with Google, and support for other oauth2 authorization providers
+- [x] Login with Google, and support for other oauth2 authorization providers
 - [x] CDN-based media storage with a cloud service
 - [x] Heroku hosting, featuring Continuous Delivery via automatic deploys with Heroku-Github integration
 - [ ] React Native mobile app that consumes the same API and shares some logic with the Web App

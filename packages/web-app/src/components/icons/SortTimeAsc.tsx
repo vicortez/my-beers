@@ -1,6 +1,6 @@
-import React from 'react'
-import { withTheme } from '@material-ui/core/styles'
+// import { withTheme } from '@material-ui/core/styles'
 import SvgIcon from '@material-ui/core/SvgIcon'
+import React from 'react'
 
 interface IProps {
   color?: string

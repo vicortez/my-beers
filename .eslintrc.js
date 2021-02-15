@@ -1,6 +1,5 @@
 module.exports = {
   extends: [
-    'react-app',
     'airbnb',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -39,6 +38,8 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-return-assign': 'off',
+    'no-unused-vars': ['error', { args: 'none' }],
+    '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
   },
   settings: {
     react: {
