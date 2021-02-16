@@ -3,10 +3,10 @@ import bcrypt from 'bcryptjs'
 import passport from 'passport'
 import { Strategy as CustomStrategy } from 'passport-custom'
 import { Strategy as LocalStrategy } from 'passport-local'
-import { User, UserDocument } from '../models/User'
+import { User } from '../models/User'
 
-passport.serializeUser<UserDocument, string>((user, done) => {
-  done(null, user.id)
+passport.serializeUser((user, done) => {
+  done(null, user)
 })
 
 passport.deserializeUser(async (id, done) => {

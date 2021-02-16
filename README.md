@@ -6,7 +6,7 @@ A simple app to save the beers you have tasted. It was developed as an exercise 
 - [x] Monorepo using Lerna and Yarn Workspaces
 - [x] Code sharing between packages
 - [x] Eslint
-- [ ] Tests with Jest
+- [x] Tests with Jest
 - [ ] Material-ui theming
 - [x] Session based authentication with Passportjs
 - [x] Login with Google, and support for other oauth2 authorization providers
