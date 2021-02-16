@@ -17,15 +17,11 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/web-app/**",
-      "**/common/**",
-      "**/api/**"
     ]
   },
   "dependencies": {
-    "lerna": "^3.22.1"
+    "lerna": "^3.22.1",
+    "@testing-library/jest-dom": "^5.11.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",

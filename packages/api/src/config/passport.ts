@@ -11,9 +11,7 @@ passport.serializeUser<UserDocument, string>((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    console.log('user id', id)
     const user = await User.findById(id)
-    console.log('user', user)
     done(null, user)
   } catch (e) {
     done(e)
@@ -74,7 +72,7 @@ const tokenStrategy = new CustomStrategy(async (req, done) => {
     }
     return done(null, user)
   } catch (e) {
-    console.log(e)
+    console.error(e)
     return done({ message: 'erro!!' }, 'OKOK')
   }
 })

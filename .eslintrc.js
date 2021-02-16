@@ -40,6 +40,10 @@ module.exports = {
     'no-return-assign': 'off',
     'no-unused-vars': ['error', { args: 'none' }],
     '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts'] },
+    ],
   },
   settings: {
     react: {
