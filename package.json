@@ -12,7 +12,8 @@
     "test": "jest",
     "test-internal": "lerna run test",
     "build": "lerna run build",
-    "serve-prod": "lerna run serve-prod --scope=api"
+    "serve-prod": "lerna run serve-prod --scope=api",
+    "version": "lerna version"
   },
   "workspaces": {
     "packages": [
